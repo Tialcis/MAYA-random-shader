@@ -34,13 +34,17 @@ class RandomShader():
     def assign_randomly(self):
         number_of_shaders = len(self.shaders_to_apply)
         for obj in self.objects_to_shade:
-            rand_number = random.random()
-            round_number = math.floor(rand_number * number_of_shaders)
-            int_number = int(round_number)
+            rand_number = random.rand_int(0, number_of_shaders)
             cmds.select(obj)
-            shader_name = self.shaders_to_apply[int_number]
+            shader_name = self.shaders_to_apply[rand_number]
             self.assign_selection_to_shader(shader_name)
         cmds.select(clear=True)
+
+    def assign_distribution(self):
+        number_of_shaders = 7
+        for obj in self.objects_to_shade:
+            rand_number = random.rand_int(0, number_of_shaders)
+
 
     def _get_SG_from_shader(self, shader=None):
         if shader:

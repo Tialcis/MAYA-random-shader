@@ -17,7 +17,7 @@ class RandomShaderUI(qw.QDialog):
     def __init__(self):
         super(RandomShaderUI, self).__init__()
 
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.setWindowTitle('Random Shader')
         self.shader = rs.RandomShader()
@@ -26,16 +26,6 @@ class RandomShaderUI(qw.QDialog):
         self.buildUI()
 
     def buildUI(self):
-        # def UI():
-		#
-        # cmds.window('Rand That Shader!', mxb=False, sizeable=False)
-        # cmds.frameLayout('Controls', borderStyle = 'in', w=150)
-        # cmds.columnLayout(w=150)
-        # cmds.button("Bake objects", w=150, h=35, align='center',backgroundColor=[0.447,0.588,0.356],c=bake_objects)
-        # cmds.button("Bake Shader", w=150, h=35, align='center', c=bake_shaders)
-        # cmds.button('Random Assign', w=150, h=35, align='center',backgroundColor=[0.992, 0.776, 0.517], c=randomize_assign)
-        # cmds.setParent('..')
-        # cmds.showWindow()
 
         mainLayout = qw.QVBoxLayout(self)
 

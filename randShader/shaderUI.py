@@ -49,6 +49,10 @@ class RandomShaderUI(qw.QDialog):
         assign_randomly_btn.clicked.connect(self.shader.assign_randomly)
         assign_layout.addWidget(assign_randomly_btn)
 
+        assign_normal_btn = qw.QPushButton('Or Assign Rainbow Normally!')
+        assign_normal_btn.clicked.connect(self.shader.assign_distribution)
+        assign_layout.addWidget(assign_normal_btn)
+
 
 def showUI():
     ui = RandomShaderUI()

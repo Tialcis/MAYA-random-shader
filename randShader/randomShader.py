@@ -1,13 +1,19 @@
-import maya.cmds as cmds
-import random as random
-import math as math
-
+from maya import cmds
+import random
 
 class RandomShader():
 
     def __init__(self):
         self.objects_to_shade = []
         self.shaders_to_apply = []
+        self.SHADER_RAINBOW = [ 'RED',
+                                'ORANGE',
+                                'YELLOW',
+                                'GREEN',
+                                'BLUE',
+                                'INDIGO',
+                                'VIOLET']
+        self.shader_counter = [0, 0, 0, 0, 0, 0, 0]
 
     def bake_objects(self):
         """
@@ -34,16 +40,21 @@ class RandomShader():
     def assign_randomly(self):
         number_of_shaders = len(self.shaders_to_apply)
         for obj in self.objects_to_shade:
-            rand_number = random.rand_int(0, number_of_shaders)
+            rand_number = random.randint(0, number_of_shaders-1)
             cmds.select(obj)
             shader_name = self.shaders_to_apply[rand_number]
-            self.assign_selection_to_shader(shader_name)
+            self._assign_selection_to_shader(shader_name)
         cmds.select(clear=True)
 
     def assign_distribution(self):
         number_of_shaders = 7
         for obj in self.objects_to_shade:
-            rand_number = random.rand_int(0, number_of_shaders)
+            rand_number = random.randint(0, 10001)
+            cmds.select(obj)
+            shader_name = self._distribute_shader(rand_number)
+            self._assign_selection_to_shader(shader_name)
+            print shader_name
+        cmds.select(clear=True)
 
 
     def _get_SG_from_shader(self, shader=None):
@@ -74,3 +85,26 @@ class RandomShader():
         sel = cmds.ls(sl=True, long=True)
         if sel:
             self._assign_obj_list_to_shader(sel, shader)
+
+    def _distribute_shader(self, rand_number):
+        if (0 < rand_number <= 475):
+            self.shader_counter[0]+=1
+            return self.SHADER_RAINBOW[0]
+        elif (475 < rand_number <= 1595):
+            self.shader_counter[1]+=1
+            return self.SHADER_RAINBOW[1]
+        elif (1595 < rand_number <= 3710):
+            self.shader_counter[2]+=1
+            return self.SHADER_RAINBOW[2]
+        elif (3710 < rand_number <= 6290):
+            self.shader_counter[3]+=1
+            return self.SHADER_RAINBOW[3]
+        elif (6290 < rand_number <= 8405):
+            self.shader_counter[4]+=1
+            return self.SHADER_RAINBOW[4]
+        elif (8405 < rand_number <= 9525):
+            self.shader_counter[5]+=1
+            return self.SHADER_RAINBOW[5]
+        elif (9525 < rand_number <= 10000):
+            self.shader_counter[6]+=1
+            return self.SHADER_RAINBOW[6]

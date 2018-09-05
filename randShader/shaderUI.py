@@ -8,6 +8,8 @@ reload(rs)
 from PySide2 import QtWidgets as qw
 from PySide2 import QtCore, QtGui
 
+Signal = QtCore.Signal()
+
 
 class RandomShaderUI(qw.QDialog):
     """
@@ -17,13 +19,18 @@ class RandomShaderUI(qw.QDialog):
     def __init__(self):
         super(RandomShaderUI, self).__init__()
 
-        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
 
         self.setWindowTitle('Random Shader')
         self.shader = rs.RandomShader()
 
+        self.status_bar = qw.QStatusBar()
 
         self.buildUI()
+
+    def update_status(self):
+        self.status_bar.showMessage('{0} objects and {1} shaders selected.'
+                                    .format(len(self.shader.objects_to_shade), len(self.shader.shaders_to_apply)))
 
     def buildUI(self):
 
@@ -35,10 +42,12 @@ class RandomShaderUI(qw.QDialog):
 
         bake_obj_btn = qw.QPushButton('1. Set Selection as Objects')
         bake_obj_btn.clicked.connect(self.shader.bake_objects)
+        bake_obj_btn.clicked.connect(self.update_status)
         select_layout.addWidget(bake_obj_btn)
 
         bake_shaders_btn = qw.QPushButton('2. Set Selection as Shaders')
         bake_shaders_btn.clicked.connect(self.shader.bake_shaders)
+        bake_shaders_btn.clicked.connect(self.update_status)
         select_layout.addWidget(bake_shaders_btn)
 
         assign_widget = qw.QWidget()
@@ -53,6 +62,8 @@ class RandomShaderUI(qw.QDialog):
         assign_normal_btn.clicked.connect(self.shader.assign_distribution)
         assign_layout.addWidget(assign_normal_btn)
 
+        mainLayout.addWidget(self.status_bar)
+        self.update_status()
 
 def showUI():
     ui = RandomShaderUI()

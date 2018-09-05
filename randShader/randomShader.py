@@ -56,7 +56,6 @@ class RandomShader():
             print shader_name
         cmds.select(clear=True)
 
-
     def _get_SG_from_shader(self, shader=None):
         if shader:
             if cmds.objExists(shader):
@@ -67,11 +66,13 @@ class RandomShader():
         return None
 
     def _assign_obj_list_to_shader(self, obj_list=None, shader=None):
+
         """
         Assign the shader to the object list
-        arguments:
-            obj_list: list of objects or faces
+        :param obj_list: list of objects or faces
+        :param shader: set shader to apply to objects
         """
+
         shader_SG = self._get_SG_from_shader(shader)
         if obj_list:
             if shader_SG:
@@ -87,6 +88,11 @@ class RandomShader():
             self._assign_obj_list_to_shader(sel, shader)
 
     def _distribute_shader(self, rand_number):
+        """
+        Determines shader in normal distribution for ROYGBIV
+        :param rand_number (int): number used to randomly place within normal curve of shaders
+        :return (str): a string representing a shader in the rainbow
+        """
         if (0 < rand_number <= 475):
             self.shader_counter[0]+=1
             return self.SHADER_RAINBOW[0]

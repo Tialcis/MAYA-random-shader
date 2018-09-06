@@ -20,9 +20,9 @@ class RandomShaderUI(qw.QDialog):
 
         self.status_bar = qw.QStatusBar()
 
-        # print 'creating rainbow'
-        # self.make_rainbow()
-        # print 'rainbow complete'
+        print 'creating rainbow'
+        self.make_rainbow()
+        print 'rainbow complete'
 
         print 'building UI'
         self.buildUI()

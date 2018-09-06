@@ -87,24 +87,25 @@ class RandomShader():
 
         return None
 
-    # def create_rainbow(self):
-    #     self.create_shader_of_color('RED')
-    #     self.create_shader_of_color('ORANGE')
-    #     self.create_shader_of_color('YELLOW')
-    #     self.create_shader_of_color('GREEN')
-    #     self.create_shader_of_color('BLUE')
-    #     self.create_shader_of_color('INDIGO')
-    #     self.create_shader_of_color('VIOLET')
-    #
-    # def create_shader_of_color(self, color):
-    #     all_shaders = cmds.ls(mat=True)
-    #     repeated_shader = [shdr for shdr in all_shaders if shdr == color]
-    #     if repeated_shader:
-    #         print 'There already exists a shader called {}'.format(color)
-    #     else:
-    #         col = Color(color)
-    #         shader = cmds.shadingNode('lambert', asShader=True, name=color)
-    #         cmds.setAttr('{}.color'.format(shader),col.get_red(), col.get_green(), col.get_blue(), type='double3')
+    def create_rainbow(self):
+        self.create_shader_of_color('RED')
+        self.create_shader_of_color('ORANGE')
+        self.create_shader_of_color('YELLOW')
+        self.create_shader_of_color('GREEN')
+        self.create_shader_of_color('BLUE')
+        self.create_shader_of_color('INDIGO')
+        self.create_shader_of_color('VIOLET')
+
+    def create_shader_of_color(self, color):
+        all_shaders = cmds.ls(mat=True)
+        repeated_shader = [shdr for shdr in all_shaders if shdr == color]
+        
+        if repeated_shader:
+            print 'There already exists a shader called {}'.format(color)
+        else:
+            col = Color(color)
+            shader = cmds.shadingNode('lambert', asShader=True, name=color)
+            cmds.setAttr('{}.color'.format(shader),col.get_red(), col.get_green(), col.get_blue(), type='double3')
 
     def _distribute_shader(self, rand_number):
         """

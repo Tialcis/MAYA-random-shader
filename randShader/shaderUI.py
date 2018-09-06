@@ -1,19 +1,13 @@
-import os
-import pprint
-
-from maya import cmds
-
 import randomShader as rs
 reload(rs)
 from PySide2 import QtWidgets as qw
 from PySide2 import QtCore, QtGui
 
-Signal = QtCore.Signal()
-
 
 class RandomShaderUI(qw.QDialog):
     """
     The RandomShaderUI is a dialog that lets us apply any shaders to any objects randomly
+    or with a rainbow distributed normally
     """
 
     def __init__(self):
@@ -26,19 +20,21 @@ class RandomShaderUI(qw.QDialog):
 
         self.status_bar = qw.QStatusBar()
 
-        self.buildUI()
+        print 'creating rainbow'
+        self.make_rainbow()
+        print 'rainbow complete'
 
-    def update_status(self):
-        self.status_bar.showMessage('{0} objects and {1} shaders selected.'
-                                    .format(len(self.shader.objects_to_shade), len(self.shader.shaders_to_apply)))
+        print 'building UI'
+        self.buildUI()
+        print 'UI complete'
 
     def buildUI(self):
 
-        mainLayout = qw.QVBoxLayout(self)
+        main_layout = qw.QVBoxLayout(self)
 
         select_widget = qw.QWidget()
         select_layout = qw.QHBoxLayout(select_widget)
-        mainLayout.addWidget(select_widget)
+        main_layout.addWidget(select_widget)
 
         bake_obj_btn = qw.QPushButton('1. Set Selection as Objects')
         bake_obj_btn.clicked.connect(self.shader.bake_objects)
@@ -52,7 +48,7 @@ class RandomShaderUI(qw.QDialog):
 
         assign_widget = qw.QWidget()
         assign_layout = qw.QHBoxLayout(assign_widget)
-        mainLayout.addWidget(assign_widget)
+        main_layout.addWidget(assign_widget)
 
         assign_randomly_btn = qw.QPushButton('3. Assign Shaders Randomly!')
         assign_randomly_btn.clicked.connect(self.shader.assign_randomly)
@@ -62,8 +58,15 @@ class RandomShaderUI(qw.QDialog):
         assign_normal_btn.clicked.connect(self.shader.assign_distribution)
         assign_layout.addWidget(assign_normal_btn)
 
-        mainLayout.addWidget(self.status_bar)
+        main_layout.addWidget(self.status_bar)
         self.update_status()
+
+    def update_status(self):
+        self.status_bar.showMessage('{0} objects and {1} shaders selected.'
+                                    .format(len(self.shader.objects_to_shade), len(self.shader.shaders_to_apply)))
+
+    def make_rainbow(self):
+        self.shader.create_rainbow()
 
 def showUI():
     ui = RandomShaderUI()

@@ -1,4 +1,5 @@
 from maya import cmds
+from colour import Color
 import random
 
 class RandomShader():
@@ -53,17 +54,12 @@ class RandomShader():
             cmds.select(obj)
             shader_name = self._distribute_shader(rand_number)
             self._assign_selection_to_shader(shader_name)
-            print shader_name
         cmds.select(clear=True)
 
-    def _get_SG_from_shader(self, shader=None):
-        if shader:
-            if cmds.objExists(shader):
-                shading_group_query = cmds.listConnections(shader, destination=True, exactType=True, type='shadingEngine')
-                if shading_group_query:
-                    return shading_group_query[0]
-
-        return None
+    def _assign_selection_to_shader(self, shader=None):
+        sel = cmds.ls(sl=True, long=True)
+        if sel:
+            self._assign_obj_list_to_shader(sel, shader)
 
     def _assign_obj_list_to_shader(self, obj_list=None, shader=None):
 
@@ -78,14 +74,37 @@ class RandomShader():
             if shader_SG:
                 cmds.sets(obj_list, e=True, forceElement=shader_SG)
             else:
-                print 'The provided shader %s didn\'t return a shader_SG' % shader
+                print 'The provided shader {} didn\'t return a shader_SG'.format(shader)
         else:
             print 'Please select one or more objects'
 
-    def _assign_selection_to_shader(self, shader=None):
-        sel = cmds.ls(sl=True, long=True)
-        if sel:
-            self._assign_obj_list_to_shader(sel, shader)
+    def _get_SG_from_shader(self, shader=None):
+        if shader:
+            if cmds.objExists(shader):
+                shading_group_query = cmds.listConnections(shader, destination=True, exactType=True, type='shadingEngine')
+                if shading_group_query:
+                    return shading_group_query[0]
+
+        return None
+
+    # def create_rainbow(self):
+    #     self.create_shader_of_color('RED')
+    #     self.create_shader_of_color('ORANGE')
+    #     self.create_shader_of_color('YELLOW')
+    #     self.create_shader_of_color('GREEN')
+    #     self.create_shader_of_color('BLUE')
+    #     self.create_shader_of_color('INDIGO')
+    #     self.create_shader_of_color('VIOLET')
+    #
+    # def create_shader_of_color(self, color):
+    #     all_shaders = cmds.ls(mat=True)
+    #     repeated_shader = [shdr for shdr in all_shaders if shdr == color]
+    #     if repeated_shader:
+    #         print 'There already exists a shader called {}'.format(color)
+    #     else:
+    #         col = Color(color)
+    #         shader = cmds.shadingNode('lambert', asShader=True, name=color)
+    #         cmds.setAttr('{}.color'.format(shader),col.get_red(), col.get_green(), col.get_blue(), type='double3')
 
     def _distribute_shader(self, rand_number):
         """

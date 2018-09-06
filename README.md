@@ -10,7 +10,7 @@ Use showUI() function on instance
 Make selection of objects and click object select button
 Make selection of shaders and click shader select button
 Click randomize button!
-Optional: Click distribute rainbow normally button (currently user must create 'RED', 'ORANGE', 'YELLOW', 'GREEN', 'BLUE', 'INDIGO' and 'VIOLET' shaders before using this feature)
+Optional: Click distribute rainbow normally button ('RED', 'ORANGE', 'YELLOW', 'GREEN', 'BLUE', 'INDIGO' and 'VIOLET' shaders automatically generated if not already present)
 
 ## Abstract
 
